@@ -1,6 +1,8 @@
 # GoldenRaspberryAwardsefsantos
 API RESTful para possibilitar a leitura da lista de indicados e vencedores da categoria Pior Filme do Golden Raspberry Awards.
 
+Download: https://github.com/efsant0s/Golden-Raspberry-Awards-efsantos/blob/main/target/GoldenRaspberryAwards-0.0.1-SNAPSHOT.jar
+
 # Utilização:
 
 Execute o GoldenRaspberryAwards0.0.1SNAPSHOT.jar, caso queira manter os registros originais do movielist.csv, não passe nenhum argumento.
