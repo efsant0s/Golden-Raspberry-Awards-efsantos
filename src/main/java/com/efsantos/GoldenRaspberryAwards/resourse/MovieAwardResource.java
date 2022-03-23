@@ -32,44 +32,6 @@ public class MovieAwardResource {
 		List<Movie> list = (List<Movie>) repository.findAll();
 		return ResponseEntity.ok().body(list);
 	}
-	@PutMapping(value = "/edit")
-	public ResponseEntity<?> update(@RequestBody Movie worst) {
-		if (worst.getId() == 0) {
-			return ResponseEntity.badRequest().build();
-		}
-		Optional<Movie> optionalWorst = repository.findById(worst.getId());
-		if (optionalWorst.equals(Optional.empty())) {
-			return ResponseEntity.notFound().build();
-		}
-		Movie wm = repository.save(worst);
-		return ResponseEntity.ok().body(wm);
-	}
-	
-	@GetMapping(value = "/{id}")
-	public ResponseEntity<?> find(@PathVariable Long id) {
-		if (id == null) {
-			return ResponseEntity.badRequest().build();
-		}
-		Optional<Movie> optionalWorst = repository.findById(id);
-		if (optionalWorst.equals(Optional.empty())) {
-			return ResponseEntity.notFound().build();
-		}
-		Movie worst = optionalWorst.get();
-		return ResponseEntity.ok().body(worst);
-
-	}
-	@DeleteMapping(value = "/delete/{id}")
-	public ResponseEntity<?> delete(@PathVariable Long id) {
-		if (id == null) {
-			return ResponseEntity.badRequest().build();
-		}
-		Optional<Movie> optionalWorst = repository.findById(id);
-		if (optionalWorst.equals(Optional.empty())) {
-			return ResponseEntity.notFound().build();
-		}
-		repository.deleteById(id);
-		return ResponseEntity.ok().body(optionalWorst.get());
-	}
 	@GetMapping(value = "/get-movie-by-producers") 
 	public ResponseEntity<Map<String, List<Movie>>> getMoviesByProducers() {
 		Map<String, List<Movie>> getMovieByProducers = Utils.getMoviesByProducers(repository, false);
@@ -80,12 +42,52 @@ public class MovieAwardResource {
 		Map<String, List<MovieAwardInterval>> minMaxPeriod = Utils.getAwardInterval(repository);
 		return ResponseEntity.ok().body(minMaxPeriod);
 	}
-
+	
+	@PutMapping(value = "/edit")
+	public ResponseEntity<?> update(@RequestBody Movie movie) {
+		if (movie.getId() == 0) {
+			return ResponseEntity.badRequest().build();
+		}
+		Optional<Movie> optionalMovie = repository.findById(movie.getId());
+		if (optionalMovie.equals(Optional.empty())) {
+			return ResponseEntity.notFound().build();
+		}
+		Movie mv = repository.save(movie);
+		return ResponseEntity.ok().body(mv);
+	}
 	@PostMapping(value = "/create")
-	public ResponseEntity<?> save(@RequestBody Movie worst) {
-		Movie wm = repository.save(worst);
+	public ResponseEntity<?> save(@RequestBody Movie movie) {
+		Movie wm = repository.save(movie);
 		return ResponseEntity.created(null).body(wm);
 	}
+	@GetMapping(value = "/{id}")
+	public ResponseEntity<?> find(@PathVariable Long id) {
+		if (id == null) {
+			return ResponseEntity.badRequest().build();
+		}
+		Optional<Movie> optionalMovie = repository.findById(id);
+		if (optionalMovie.equals(Optional.empty())) {
+			return ResponseEntity.notFound().build();
+		}
+		Movie movie = optionalMovie.get();
+		return ResponseEntity.ok().body(movie);
+
+	}
+	@DeleteMapping(value = "/delete/{id}")
+	public ResponseEntity<?> delete(@PathVariable Long id) {
+		if (id == null) {
+			return ResponseEntity.badRequest().build();
+		}
+		Optional<Movie> optionalMovie = repository.findById(id);
+		if (optionalMovie.equals(Optional.empty())) {
+			return ResponseEntity.notFound().build();
+		}
+		repository.deleteById(id);
+		return ResponseEntity.ok().body(optionalMovie.get());
+	}
+
+
+
 
 
 

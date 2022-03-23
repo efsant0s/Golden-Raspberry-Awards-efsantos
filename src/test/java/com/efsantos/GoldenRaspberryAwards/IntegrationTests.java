@@ -19,13 +19,6 @@ import com.opencsv.CSVReader;
  
 
 	@Test
-	void contextLoads() {
-		
-	}
-
- 
-
-	@Test
 	void SeparadorDeProdutores() throws IOException {
 		List<Movie> StringListaProdutores = obterListaDeDados();
 		for (Movie movie : StringListaProdutores) {
@@ -53,31 +46,11 @@ import com.opencsv.CSVReader;
 					listaProdutores = new String[1];
 					listaProdutores[0] = producers;
 				}
-			}
-			// System.out.println("-----------------" + movie.getProducers() +
-			// "-----------------");
-			//
-			// "-----------------");
-			for (int i = 0; i < listaProdutores.length; i++) {
-				// System.out.println(listaProdutores[i]);
-			}
+			}  
 		}
-	}
-
+	} 
 	@Test
-	void LerArquivo() throws IOException {
-		File file = ResourceUtils.getFile("classpath:movielist.csv");
-		assertTrue(file.exists());
-		FileReader filereader = new FileReader(file);
-		CSVReader csvReader = new CSVReader(filereader);
-		String[] nextRecord;
-		while ((nextRecord = csvReader.readNext()) != null) {
-			// System.out.println(nextRecord[0]);
-		}
-	}
-
-	@Test
-	void CriarListArquivos() throws IOException {
+	void GarantirQueDadosSaoExatos() throws IOException {
 		File file = ResourceUtils.getFile("classpath:movielist.csv");
 		assertTrue(file.exists());
 		FileReader filereader = new FileReader(file);
@@ -91,7 +64,7 @@ import com.opencsv.CSVReader;
 	}
 
 	@Test
-	void GarantirQueDadosSaoExatos() throws IOException {
+	void CriarListArquivos() throws IOException {
 		File file = ResourceUtils.getFile("classpath:movielist.csv");
 		FileReader filereader = new FileReader(file);
 		CSVReader csvReader = new CSVReader(filereader);

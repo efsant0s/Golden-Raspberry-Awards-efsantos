@@ -1,0 +1,8 @@
+com\efsantos\GoldenRaspberryAwards\model\MovieAwardInterval.class
+com\efsantos\GoldenRaspberryAwards\GoldenRaspberryAwardsEfsantosApplication.class
+com\efsantos\GoldenRaspberryAwards\model\Movie.class
+com\efsantos\GoldenRaspberryAwards\repository\MovieRepository.class
+com\efsantos\GoldenRaspberryAwards\utils\Utils.class
+com\efsantos\GoldenRaspberryAwards\utils\Utils$1.class
+com\efsantos\GoldenRaspberryAwards\resourse\MovieAwardResource.class
+com\efsantos\GoldenRaspberryAwards\utils\Utils$2.class
