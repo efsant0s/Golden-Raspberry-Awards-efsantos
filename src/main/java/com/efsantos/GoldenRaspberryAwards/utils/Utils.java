@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.ArrayUtils;
@@ -58,39 +59,55 @@ public class Utils {
 	}
 
 	public static Map<String, List<MovieAwardInterval>> getAwardInterval(MovieRepository repository) {
-
+		Map<String, List<MovieAwardInterval>> minMaxPeriod = new HashMap<String, List<MovieAwardInterval>>();
 		LinkedHashMap<String, List<Movie>> moviesPerProducer = getMoviesByProducers(repository, true);
-		List<MovieAwardInterval> listIntervalsMin = new ArrayList<>();
+		List<MovieAwardInterval> intervalList = new ArrayList<>();
 		List<MovieAwardInterval> listIntervalsMax = new ArrayList<>();
+		List<MovieAwardInterval> listIntervalsMin = new ArrayList<>();
+		Integer diffTempMin = 0;
+		Integer diffTempMax = 0;
 		for (Map.Entry<String, List<Movie>> producerMovies : moviesPerProducer.entrySet()) {
 			String produtor = producerMovies.getKey();
 			List<Movie> listaFilmesPorProdutor = producerMovies.getValue();
-
 			if (listaFilmesPorProdutor.size() >= 2) {
 				for (int i = 0; i < listaFilmesPorProdutor.size() - 1; i++) {
 					Integer followingWin = listaFilmesPorProdutor.get(i + 1).getYear();
 					Integer previousWin = listaFilmesPorProdutor.get(i).getYear();
 					Integer diferencaTempo = followingWin - previousWin;
-					listIntervalsMin.add(new MovieAwardInterval(produtor, diferencaTempo, previousWin, followingWin));
-					listIntervalsMax.add(new MovieAwardInterval(produtor, diferencaTempo, previousWin, followingWin));
+					if (diffTempMin.equals(0) && diffTempMax.equals(0)) {
+						diffTempMin = diferencaTempo;
+						diffTempMin = diferencaTempo;
+					} else {
+						if (diferencaTempo > diffTempMax) {
+							diffTempMax = diferencaTempo;
+						}
+						if (diferencaTempo < diffTempMin) {
+							diffTempMin = diferencaTempo;
+						}
+					}
+					intervalList.add(new MovieAwardInterval(produtor, diferencaTempo, previousWin, followingWin));
 				}
-			}
-		}
 
-		Map<String, List<MovieAwardInterval>> minMaxPeriod = new HashMap<String, List<MovieAwardInterval>>();
-		Collections.sort(listIntervalsMin, new Comparator<MovieAwardInterval>() {
+			}
+
+		}
+		Collections.sort(intervalList, new Comparator<MovieAwardInterval>() {
 			public int compare(MovieAwardInterval s, MovieAwardInterval s2) {
 				return s.getInterval() - s2.getInterval();
 			}
 		});
-		minMaxPeriod.put("min", listIntervalsMin);
-		Collections.sort(listIntervalsMax, new Comparator<MovieAwardInterval>() {
-			public int compare(MovieAwardInterval s, MovieAwardInterval s2) {
-				return s2.getInterval() - s.getInterval();
+		for (MovieAwardInterval movieAwardInterval : intervalList) {
+			if (movieAwardInterval.getInterval() == diffTempMin) {
+				listIntervalsMin.add(movieAwardInterval);
+			} else if (movieAwardInterval.getInterval() == diffTempMax) {
+				listIntervalsMax.add(movieAwardInterval);
 			}
-		});
-		minMaxPeriod.put("max", listIntervalsMax);
+		}
 
+		if (!intervalList.isEmpty()) {
+			minMaxPeriod.put("min", listIntervalsMin);
+			minMaxPeriod.put("max", listIntervalsMax);
+		}
 		return minMaxPeriod;
 	}
 
