@@ -40,17 +40,5 @@ Para buscar registros:
 Requisição GET para:
 http://localhost:8080/movie-award/{id}
 Substituindo o ID pelo código do filme.
-
-
-Para editar registros:
-enviar requisição PUT para:
-http://localhost:8080/movie-award/edit
-Exemplo de Json para edição:
->{"id" : "2",
-"year" : "2022",
-"title" : "Space Jam  A New Legacy ",
-"studios" : "Warner Bros. Pictures",
-"producers" : "Maverick Carter, Ryan Coogler, Duncan Henderson, and LeBron James",
-"winner" : "true" }
-
+ 
 
